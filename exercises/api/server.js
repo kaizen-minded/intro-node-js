@@ -9,7 +9,7 @@ const path = require('path')
  */
 const findAsset = (name) => {
   const assetPath = path.join(__dirname, 'assets', name)
-  return fs.readFileSync(assetPath, {encoding: 'utf-8'}).toString()
+  return fs.readFile(assetPath, {encoding: 'utf-8'}).toString()
 }
 
 const hostname = '127.0.0.1'
@@ -29,7 +29,9 @@ const server = http.createServer((req, res) => {
     res.end()
   } else {
     // missing asset should not cause server crash
-    throw new Error('route not found')
+    // throw new Error('route not found')
+    res.writeHead(404)
+    res.write('404 file not found')
     res.end()
   }
   // most important part, send down the asset
